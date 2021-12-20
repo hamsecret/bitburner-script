@@ -360,7 +360,7 @@ export async function main(ns) {
     var contractLocation = await findContract(ns)
     let target = contractLocation
     if (!target) {
-        ns.toast('no contract now')
+        // ns.toast('no contract now')
         return
     }
 
