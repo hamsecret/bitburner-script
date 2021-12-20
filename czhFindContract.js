@@ -356,6 +356,74 @@ async function triangleFindWay(triangle) {
     }
     return minTotal;
 }
+
+async function findAllValidMathE(data) {
+    let arr = data
+    let tar = arr[1]
+    let nums = []
+
+    for (let ii = 0; ii < arr[0].length; ii++) {
+        nums.push(arr[0].substr(ii, 1))
+    }
+
+    let ways = [[nums[0]]]
+
+    let methods = ['+', '-', '*']
+    let steps = nums.length - 1
+    let result = []
+    let res = function () {
+        if (!result[0]) {
+            let t = []
+            for (let ii = 0; ii < methods.length; ii++) {
+                t.push([methods[ii]])
+            }
+            result = t
+            return res()
+        }
+        else {
+            let newT = []
+            for (let ii = 0; ii < result.length; ii++) {
+                let t = result[ii]
+                for (let jj = 0; jj < methods.length; jj++) {
+                    let tt = []
+                    for (let mm = 0; mm < t.length; mm++) {
+                        tt.push(t[mm])
+                    }
+                    tt.push(methods[jj])
+                    newT.push(tt)
+                }
+            }
+            result = newT
+            if (result[0].length < steps) {
+                return res()
+            } else {
+                return result
+            }
+        }
+    }
+
+    let resultStr = ''
+    let checkResult = function () {
+        for (let ii = 0; ii < result.length; ii++) {
+            let str = ''
+            for (let jj = 0; jj < nums.length; jj++) {
+                str += nums[jj]
+                if (jj < nums.length - 1) {
+                    str += result[ii][jj]
+                }
+            }
+            if (eval(str) == tar) {
+                resultStr += str + ', '
+            }
+        }
+    }
+    res()
+    checkResult()
+    resultStr = resultStr.slice(0, resultStr.length - 2)
+    resultStr = '[' + resultStr + ']'
+    return resultStr
+}
+
 export async function main(ns) {
     var contractLocation = await findContract(ns)
     let target = contractLocation
@@ -436,6 +504,13 @@ export async function main(ns) {
         let award = ns.codingcontract.attempt(result, files[0], target, [true])
         ns.toast(target + " : " + contractType + '->' + award)
     }
+    if (contractType == 'Find All Valid Math Expressions') {
+        let result = await findAllValidMathE(contractData)
+        console.warn(result)
+        let award = ns.codingcontract.attempt(result, files[0], target, [true])
+        ns.toast(target + " : " + contractType + '->' + award)
+    }
+
 
     console.warn(contractType, contractData)
     await findServer(ns, target)
