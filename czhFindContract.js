@@ -339,7 +339,23 @@ async function MergeOverlappingIntervals(data) {
     console.warn(result)
     return result
 }
-
+async function triangleFindWay(triangle) {
+    let n = triangle.length;
+    let f = [];
+    f[0] = triangle[0][0];
+    for (let i = 1; i < n; ++i) {
+        f[i] = f[i - 1] + triangle[i][i];
+        for (let j = i - 1; j > 0; --j) {
+            f[j] = Math.min(f[j - 1], f[j]) + triangle[i][j];
+        }
+        f[0] += triangle[i][0];
+    }
+    let minTotal = f[0];
+    for (let i = 1; i < n; ++i) {
+        minTotal = Math.min(minTotal, f[i]);
+    }
+    return minTotal;
+}
 export async function main(ns) {
     var contractLocation = await findContract(ns)
     let target = contractLocation
@@ -355,70 +371,71 @@ export async function main(ns) {
         let result = await uniquePathsInAGridI(contractData)
         console.warn(result)
         let award = ns.codingcontract.attempt(result, files[0], target, [true])
-        ns.toast(target+" : "+contractType+'->'+award)
+        ns.toast(target + " : " + contractType + '->' + award)
     }
     if (contractType == 'Unique Paths in a Grid II') {
         let result = await uniquePathsInAGridII(contractData)
         console.warn(result)
         let award = ns.codingcontract.attempt(result, files[0], target, [true])
-        ns.toast(target+" : "+contractType+'->'+award)
+        ns.toast(target + " : " + contractType + '->' + award)
     }
     if (contractType == 'Spiralize Matrix') {
         let result = await spiralizeMatrix(contractData)
         console.warn(result)
         let award = ns.codingcontract.attempt(result, files[0], target, [true])
-        ns.toast(target+" : "+contractType+'->'+award)
+        ns.toast(target + " : " + contractType + '->' + award)
     }
     if (contractType == 'Array Jumping Game') {
-        ns.toast(target+" : "+contractType+'->'+award)
+        ns.toast(target + " : " + contractType + '->' + award)
         let result = await arrayJumpingGame(contractData)
         console.warn(result)
         let award = ns.codingcontract.attempt(result, files[0], target, [true])
-        ns.toast(target+" : "+contractType+'->'+award)
+        ns.toast(target + " : " + contractType + '->' + award)
     }
     if (contractType == 'Generate IP Addresses') {
         let result = await generrateIpAddress(contractData)
         console.warn(result)
         let award = ns.codingcontract.attempt(result, files[0], target, [true])
-        ns.toast(target+" : "+contractType+'->'+award)
+        ns.toast(target + " : " + contractType + '->' + award)
     }
     if (contractType == 'Algorithmic Stock Trader I') {
         let result = await ASTI(contractData)
         console.warn(result)
         let award = ns.codingcontract.attempt(result, files[0], target, [true])
-        ns.toast(target+" : "+contractType+'->'+award)
+        ns.toast(target + " : " + contractType + '->' + award)
     }
     if (contractType == 'Find Largest Prime Factor') {
         let result = await findLargestPrimenFactor(contractData)
         console.warn(result)
         let award = ns.codingcontract.attempt(result, files[0], target, [true])
-        ns.toast(target+" : "+contractType+'->'+award)
+        ns.toast(target + " : " + contractType + '->' + award)
     }
     if (contractType == 'Merge Overlapping Intervals') {
         let result = await MergeOverlappingIntervals(contractData)
         console.warn(result)
         let award = ns.codingcontract.attempt(result, files[0], target, [true])
-        ns.toast(target+" : "+contractType+'->'+award)
+        ns.toast(target + " : " + contractType + '->' + award)
     }
     if (contractType == 'Total Ways to Sum') {
         for (let ii = 0; ii < 10; ii++) {
             let result = ii + 1
             let award = ns.codingcontract.attempt(result, files[0], target, [true])
-            ns.toast(target+" : "+contractType+'->'+award)
+            ns.toast(target + " : " + contractType + '->' + award)
         }
     }
     if (contractType == 'Sanitize Parentheses in Expression') {
         for (let ii = 0; ii < 10; ii++) {
             let result = ii + 1
             let award = ns.codingcontract.attempt(result, files[0], target, [true])
-            ns.toast(target+" : "+contractType+'->'+award)
+            ns.toast(target + " : " + contractType + '->' + award)
         }
     }
-
-
-
-
-
+    if (contractType == 'Minimum Path Sum in a Triangle') {
+        let result = await triangleFindWay(contractData)
+        console.warn(result)
+        let award = ns.codingcontract.attempt(result, files[0], target, [true])
+        ns.toast(target + " : " + contractType + '->' + award)
+    }
 
     console.warn(contractType, contractData)
     await findServer(ns, target)
