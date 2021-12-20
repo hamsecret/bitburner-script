@@ -197,7 +197,7 @@ function isEndarrayJumpingGame(data, nowPos) {
     return ok
 }
 
-async function generrateIpAddress(data) {
+async function generrateIpAddress(s) {
     const SEG_COUNT = 4;
     const segments = new Array(SEG_COUNT);
     const ans = [];
