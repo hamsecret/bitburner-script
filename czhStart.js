@@ -111,6 +111,7 @@ async function getFileList(ns) {
 }
 
 export async function main(ns) {
+    ns.exec('czhDeployMyServer.js', 'home')
     ns.exec('czhStartFindingContract.js','home')
     ns.exec('czhHUD.js','home')
     await deployAll(ns)
