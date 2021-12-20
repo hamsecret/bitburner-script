@@ -17,7 +17,7 @@ export async function main(ns) {
   const doc = document; // This is expensive! (25GB RAM) Perhaps there's a way around it? ;)
   const hook0 = doc.getElementById('overview-extra-hook-0');
 console.warn(hook0.parentNode)
-hook0.parentNode.parentNode.setAttribute('style','height: 50vh!important;overflow-y:scroll;display: block;')
+hook0.parentNode.parentNode.setAttribute('style','height: 30vh!important;overflow-y:scroll;display: block;')
   const hook1 = doc.getElementById('overview-extra-hook-1');
   while (true) {
       try {
