@@ -1,0 +1,4 @@
+var script = args[0];
+var server = args[1];
+rm(script, server)
+scp(script, server)

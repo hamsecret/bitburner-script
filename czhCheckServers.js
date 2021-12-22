@@ -1,6 +1,6 @@
 async function scan(ns, parent, server, list) {
-	let fileList = ['czhAutoRun.js', 'czhSendScript.ns', 'czhNuke.js', 'czhWeaken.js', 'czhGrow.js']
-	const children = ns.scan(server);
+	let fileList = ['czhWeaken.js', 'czhGrow.js']
+	const children = await ns.scan(server);
 	for (let child of children) {
 		if (parent == child) {
 			continue;
@@ -29,7 +29,7 @@ async function scan(ns, parent, server, list) {
 			openPorts++
 		}
 		if (ns.getServerNumPortsRequired(host) > openPorts) {
-			continue
+			
 		} else {
 			ns.nuke(host)
 		}
@@ -38,19 +38,23 @@ async function scan(ns, parent, server, list) {
 			// ns.tprint(script + '->' + host)
 			// ns.killall(host)
 			ns.rm(script, host)
+			if (ns.scriptRunning(script, host)) {
+				continue
+			}
 			while (true) {
 				let maxRam = ns.getServerMaxRam('home')
 				let usedRam = ns.getServerUsedRam('home')
-				let scriptRam = ns.getScriptRam('czhSendScript.ns', 'home')
+				let scriptRam = ns.getScriptRam('czhSendScript.script', 'home')
 				if (maxRam - usedRam > scriptRam) {
 					break
 				}
 				await ns.sleep(500)
 			}
-			ns.exec('czhSendScript.ns', 'home', 1, script, host)
+			// console.warn('send',script,host)
+			ns.exec('czhSendScript.script', 'home', 1, script, host)
 		}
 		list.push(child);
-		scan(ns, server, child, list);
+		await scan(ns, server, child, list);
 	}
 }
 async function list_servers(ns) {
@@ -63,7 +67,6 @@ async function list_servers(ns) {
 export async function main(ns) {
 	while (true) {
 		let servers = await list_servers(ns)
-
 		await ns.sleep(30000)
 	}
 }

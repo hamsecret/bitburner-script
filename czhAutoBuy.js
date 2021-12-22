@@ -23,13 +23,23 @@ export async function main(ns) {
 			continue
 		}
 		var ram = 8;
-		var i = getPurchasedServers().length;
-		while (i < getPurchasedServerLimit()) {
-			if (getServerMoneyAvailable("home") > getPurchasedServerCost(ram)) {
-				var hostname = purchaseServer("pserv-" + i, ram);
-				toast('买入pserv-' + i)
+		var i = ns.getPurchasedServers().length;
+		let noMore = true
+		while (i < ns.getPurchasedServerLimit()) {
+			if (ns.getServerMoneyAvailable("home") > ns.getPurchasedServerCost(ram)) {
+				var hostname = ns.purchaseServer("pserv-" + i, ram);
+				ns.toast('买入pserv-' + i)
+				noMore = false
 				++i;
 			}
+		}
+		if (!noMore) {
+			ns.kill('czhHUD.js', 'home')
+			ns.exec('czhHUD.js', 'home')
+			if (ns.isRunning('czhCheckServers.js', 'home')) {
+				await ns.sleep(30000)
+			}
+			ns.exec('czhCheckServers.js', 'home')
 		}
 		await ns.sleep(3000)
 	}

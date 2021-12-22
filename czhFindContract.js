@@ -281,6 +281,70 @@ async function ASTI(data) {
     };
     return maxProfit(k, prices)
 }
+async function ASTII(data) {
+    let arr = [999, data]
+    let k = arr[0]
+    let prices = arr[1]
+    let maxProfit = function (k, prices) {
+        if (!prices.length) {
+            return 0;
+        }
+
+        const n = prices.length;
+        k = Math.min(k, Math.floor(n / 2));
+        const buy = new Array(n).fill(0).map(() => new Array(k + 1).fill(0));
+        const sell = new Array(n).fill(0).map(() => new Array(k + 1).fill(0));
+
+        buy[0][0] = -prices[0];
+        sell[0][0] = 0;
+        for (let i = 1; i <= k; ++i) {
+            buy[0][i] = sell[0][i] = -Number.MAX_VALUE;
+        }
+
+        for (let i = 1; i < n; ++i) {
+            buy[i][0] = Math.max(buy[i - 1][0], sell[i - 1][0] - prices[i]);
+            for (let j = 1; j <= k; ++j) {
+                buy[i][j] = Math.max(buy[i - 1][j], sell[i - 1][j] - prices[i]);
+                sell[i][j] = Math.max(sell[i - 1][j], buy[i - 1][j - 1] + prices[i]);
+            }
+        }
+
+        return Math.max(...sell[n - 1]);
+    };
+    return maxProfit(k, prices)
+}
+async function ASTIII(data) {
+    let arr = [2, data]
+    let k = arr[0]
+    let prices = arr[1]
+    let maxProfit = function (k, prices) {
+        if (!prices.length) {
+            return 0;
+        }
+
+        const n = prices.length;
+        k = Math.min(k, Math.floor(n / 2));
+        const buy = new Array(n).fill(0).map(() => new Array(k + 1).fill(0));
+        const sell = new Array(n).fill(0).map(() => new Array(k + 1).fill(0));
+
+        buy[0][0] = -prices[0];
+        sell[0][0] = 0;
+        for (let i = 1; i <= k; ++i) {
+            buy[0][i] = sell[0][i] = -Number.MAX_VALUE;
+        }
+
+        for (let i = 1; i < n; ++i) {
+            buy[i][0] = Math.max(buy[i - 1][0], sell[i - 1][0] - prices[i]);
+            for (let j = 1; j <= k; ++j) {
+                buy[i][j] = Math.max(buy[i - 1][j], sell[i - 1][j] - prices[i]);
+                sell[i][j] = Math.max(sell[i - 1][j], buy[i - 1][j - 1] + prices[i]);
+            }
+        }
+
+        return Math.max(...sell[n - 1]);
+    };
+    return maxProfit(k, prices)
+}
 async function findLargestPrimenFactor(data) {
     let a = data
     let result = 0
@@ -311,7 +375,7 @@ function isPrime(n) {
     return true;
 }
 
-async function MergeOverlappingIntervals(data) {
+async function mergeOverlappingIntervals(data) {
     let arr = data
     let all = []
     for (let ii = 0; ii < arr.length; ii++) {
@@ -423,7 +487,17 @@ async function findAllValidMathE(data) {
     resultStr = '[' + resultStr + ']'
     return resultStr
 }
-
+async function subarrayMaxSum(data) {
+    var maxSubArray = function (nums) {
+        let pre = 0, maxAns = nums[0];
+        nums.forEach((x) => {
+            pre = Math.max(pre + x, x);
+            maxAns = Math.max(maxAns, pre);
+        });
+        return maxAns;
+    };
+    return maxSubArray(data)
+}
 export async function main(ns) {
     var contractLocation = await findContract(ns)
     let target = contractLocation
@@ -454,10 +528,9 @@ export async function main(ns) {
         ns.toast(target + " : " + contractType + '->' + award)
     }
     if (contractType == 'Array Jumping Game') {
-        ns.toast(target + " : " + contractType + '->' + award)
         let result = await arrayJumpingGame(contractData)
         console.warn(result)
-        let award = ns.codingcontract.attempt(result, files[0], target, [true])
+        let award = await ns.codingcontract.attempt(result, files[0], target, [true])
         ns.toast(target + " : " + contractType + '->' + award)
     }
     if (contractType == 'Generate IP Addresses') {
@@ -472,6 +545,18 @@ export async function main(ns) {
         let award = ns.codingcontract.attempt(result, files[0], target, [true])
         ns.toast(target + " : " + contractType + '->' + award)
     }
+    if (contractType == 'Algorithmic Stock Trader II') {
+        let result = await ASTII(contractData)
+        console.warn(result)
+        let award = ns.codingcontract.attempt(result, files[0], target, [true])
+        ns.toast(target + " : " + contractType + '->' + award)
+    }
+    if (contractType == 'Algorithmic Stock Trader III') {
+        let result = await ASTIII(contractData)
+        console.warn(result)
+        let award = ns.codingcontract.attempt(result, files[0], target, [true])
+        ns.toast(target + " : " + contractType + '->' + award)
+    }
     if (contractType == 'Find Largest Prime Factor') {
         let result = await findLargestPrimenFactor(contractData)
         console.warn(result)
@@ -479,7 +564,7 @@ export async function main(ns) {
         ns.toast(target + " : " + contractType + '->' + award)
     }
     if (contractType == 'Merge Overlapping Intervals') {
-        let result = await MergeOverlappingIntervals(contractData)
+        let result = await mergeOverlappingIntervals(contractData)
         console.warn(result)
         let award = ns.codingcontract.attempt(result, files[0], target, [true])
         ns.toast(target + " : " + contractType + '->' + award)
@@ -510,7 +595,12 @@ export async function main(ns) {
         let award = ns.codingcontract.attempt(result, files[0], target, [true])
         ns.toast(target + " : " + contractType + '->' + award)
     }
-
+    if (contractType == 'Subarray with Maximum Sum') {
+        let result = await subarrayMaxSum(contractData)
+        console.warn(result)
+        let award = ns.codingcontract.attempt(result, files[0], target, [true])
+        ns.toast(target + " : " + contractType + '->' + award)
+    }
 
     console.warn(contractType, contractData)
     await findServer(ns, target)

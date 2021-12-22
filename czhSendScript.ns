@@ -1,6 +1,0 @@
-/** @param {NS} ns **/
-export async function main(ns) {
-	let script = ns.args[0];
-	let server = ns.args[1];
-	ns.scp(script, server)
-}
