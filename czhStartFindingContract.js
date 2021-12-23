@@ -2,6 +2,6 @@
 export async function main(ns) {
 	while (true) {
 		ns.exec('czhFindContract.js', 'home')
-		await ns.sleep(2000)
+		await ns.sleep(20000)
 	}
 }

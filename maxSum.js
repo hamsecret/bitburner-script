@@ -1829,16 +1829,10 @@ Object.keys(allServers).forEach(function (v, i) {
 let maxGrowth = 0
 let maxServer = ''
 for (let ii = 0; ii < servers.length; ii++) {
-  console.log(servers[ii], allServers[servers[ii]].moneyAvailable / allServers[servers[ii]].hackDifficulty, allServers[servers[ii]].moneyAvailable, allServers[servers[ii]].hackDifficulty)
-  if (allServers[servers[ii]].moneyAvailable / allServers[servers[ii]].hackDifficulty > 0) {
-    if (allServers[servers[ii]].moneyAvailable / allServers[servers[ii]].hackDifficulty > maxGrowth) {
-      maxGrowth = allServers[servers[ii]].moneyAvailable / allServers[servers[ii]].hackDifficulty
-      maxServer = servers[ii]
-    }
-  }
+  // console.log(servers[ii], allServers[servers[ii]].moneyAvailable / allServers[servers[ii]].hackDifficulty, allServers[servers[ii]].moneyAvailable, allServers[servers[ii]].hackDifficulty)
+  console.log(servers[ii],allServers[servers[ii]].moneyAvailable,allServers[servers[ii]].hackDifficulty,allServers[servers[ii]].baseDifficulty)
+  maxGrowth += allServers[servers[ii]].moneyAvailable
 }
 
-let tar = allServers[maxServer]
-console.log(tar.moneyMax / tar.serverGrowth)
-
+console.log(servers.length)
 console.log(maxServer, maxGrowth)

@@ -345,6 +345,39 @@ async function ASTIII(data) {
     };
     return maxProfit(k, prices)
 }
+async function ASTIV(data) {
+    let arr = data
+    let k = arr[0]
+    let prices = arr[1]
+    let maxProfit = function (k, prices) {
+        if (!prices.length) {
+            return 0;
+        }
+
+        const n = prices.length;
+        k = Math.min(k, Math.floor(n / 2));
+        const buy = new Array(n).fill(0).map(() => new Array(k + 1).fill(0));
+        const sell = new Array(n).fill(0).map(() => new Array(k + 1).fill(0));
+
+        buy[0][0] = -prices[0];
+        sell[0][0] = 0;
+        for (let i = 1; i <= k; ++i) {
+            buy[0][i] = sell[0][i] = -Number.MAX_VALUE;
+        }
+
+        for (let i = 1; i < n; ++i) {
+            buy[i][0] = Math.max(buy[i - 1][0], sell[i - 1][0] - prices[i]);
+            for (let j = 1; j <= k; ++j) {
+                buy[i][j] = Math.max(buy[i - 1][j], sell[i - 1][j] - prices[i]);
+                sell[i][j] = Math.max(sell[i - 1][j], buy[i - 1][j - 1] + prices[i]);
+            }
+        }
+
+        return Math.max(...sell[n - 1]);
+    };
+    return maxProfit(k, prices)
+}
+
 async function findLargestPrimenFactor(data) {
     let a = data
     let result = 0
@@ -557,6 +590,13 @@ export async function main(ns) {
         let award = ns.codingcontract.attempt(result, files[0], target, [true])
         ns.toast(target + " : " + contractType + '->' + award)
     }
+    if (contractType == 'Algorithmic Stock Trader IV') {
+        let result = await ASTIV(contractData)
+        console.warn(result)
+        let award = ns.codingcontract.attempt(result, files[0], target, [true])
+        ns.toast(target + " : " + contractType + '->' + award)
+    }
+    
     if (contractType == 'Find Largest Prime Factor') {
         let result = await findLargestPrimenFactor(contractData)
         console.warn(result)

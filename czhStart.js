@@ -18,10 +18,10 @@ export function list_servers(ns) {
 
 export async function main(ns) {
     // 自动清空系统运行
-    let servers = list_servers(ns)
+    let servers = await list_servers(ns)
 
-    // 开启HUD HUD承载了数据存储的任务
-    ns.exec('czhHUD.js', 'home')
+    // 自动hack
+    ns.exec('czhKeepHack.js','home')
     // 自动购买物件
     ns.exec('czhAutoBuy.js', 'home')
     // 自动同步所有服务器
@@ -30,15 +30,29 @@ export async function main(ns) {
     ns.exec('czhDeployMyServer.js', 'home')
     // 自动找contract
     ns.exec('czhStartFindingContract.js', 'home')
+    // 自动hack
+    ns.exec('czhKeepHack.js','home')
 
-    
-    for (let server of servers) {
-        if (server == 'darkweb') {
-            continue
-        }
-        if (server.indexOf('pserv') == 0) {
-            continue
-        }
-        ns.exec('czhHack.js', 'home', 2, server)
-    }
+    // for (let server of servers) {
+    //     if (server == 'darkweb') {
+    //         continue
+    //     }
+    //     if (server.indexOf('pserv') == 0) {
+    //         continue
+    //     }
+    //     ns.exec('czhHack.js', 'home', 2, server)
+    // }
+    // let free = ns.getServerMaxRam('home') - ns.getServerUsedRam('home') - 30
+    // let ft = Math.floor(free / 1.75)
+    // if (ft > 0) {
+    //     let tar = hackList[hackList.length - 1]
+    //     if (ns.getServerMoneyAvailable(tar) > 0) {
+    //         // 还有钱
+    //         ns.exec('czhHack.js', 'home', ft, tar, new Date().getTime())
+    //     } else {
+    //         // 没有钱了
+    //         hackList.pop()
+    //     }
+    // }
+
 }
