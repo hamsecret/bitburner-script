@@ -38,11 +38,19 @@ async function scan(ns, parent, server, list) {
 				targetServer.push(server)
 			}
 		}
-		
+
 		if (server == 'darkweb') {
 			continue
 		}
+
 		if (ns.hasRootAccess(child)) {
+			// 设置找到的第一个32G服务器为contractor
+			let contractor = localStorage.getItem('contractor')
+			if (!contractor) {
+				if (ns.getServerMaxRam(child) == 32) {
+					localStorage.setItem('contractor', child)
+				}
+			}
 			list.push(child);
 		}
 		await scan(ns, server, child, list);
@@ -57,10 +65,10 @@ async function list_servers(ns) {
 /** @param {NS} ns **/
 var targetServer = []
 export async function main(ns) {
-	while(true){
+	while (true) {
 		targetServer = []
 		let servers = await list_servers(ns)
-		localStorage.setItem('runningServers',JSON.stringify(servers))
-		await ns.sleep(100000)
+		localStorage.setItem('runningServers', JSON.stringify(servers))
+		await ns.sleep(10000)
 	}
 }

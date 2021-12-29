@@ -3,8 +3,8 @@ export async function main(ns) {
 	while (true) {
 		// BruteSSH.exe - $500.000k - Opens up SSH Ports.
 		// FTPCrack.exe - $1.500m - Opens up FTP Ports.
-		// relaySMTP.exe - $5.000m - Opens up SMTP Ports.
-		// HTTPWorm.exe - $30.000m - Opens up HTTP Ports.
+		// relaySMTP.exe - $5.000m - Opens up SMTP Ports. 18台主机
+		// HTTPWorm.exe - $30.000m - Opens up HTTP Ports. 20台主机
 		// SQLInject.exe - $250.000m - Opens up SQL Ports.
 		// ServerProfiler.exe - $500.000k - Displays detailed information about a server.
 		// DeepscanV1.exe - $500.000k - Enables 'scan-analyze' with a depth up to 5.

@@ -1,6 +1,6 @@
 /** @param {NS} ns **/
 export async function main(ns) {
-  // 第一阶段的hack
+  // 第二阶段的hack
   while(true){
     let host = localStorage.getItem('P2hackTarget')
     try{

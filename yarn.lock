@@ -376,7 +376,7 @@ safe-buffer@~5.2.0:
 
 static-server@^2.2.1:
   version "2.2.1"
-  resolved "https://registry.npm.taobao.org/static-server/download/static-server-2.2.1.tgz#49e3cae2a001736b0ee9e95d21d3d843fc95efaa"
+  resolved "https://registry.nlark.com/static-server/download/static-server-2.2.1.tgz#49e3cae2a001736b0ee9e95d21d3d843fc95efaa"
   integrity sha1-SePK4qABc2sO6eldIdPYQ/yV76o=
   dependencies:
     chalk "^0.5.1"

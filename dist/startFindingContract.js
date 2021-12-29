@@ -1,7 +1,8 @@
 /** @param {NS} ns **/
 export async function main(ns) {
 	while (true) {
-		ns.exec('czhFindContract.js', 'home')
+		let contractor=localStorage.getItem('contractor')
+		ns.exec('findContract.js', contractor)
 		await ns.sleep(20000)
 	}
 }

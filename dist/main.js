@@ -1,11 +1,14 @@
 /** @param {NS} ns **/
 export async function main(ns) {
+  // 一些初始化设置
+  localStorage.clear()
+
   // 下载代码
   let urlPre = 'http://localhost:9999/dist/'
   localStorage.setItem('urlPre', urlPre)
   let allServers = ['home', 'n00dles', 'CSEC', 'neo-net', 'the-hub', 'crush-fitness', 'catalyst', 'silver-helix', 'netlink', 'syscore', 'lexo-corp', 'rho-construction', 'aerocorp', 'deltaone', 'icarus', 'infocomm', 'titan-labs', 'taiyang-digital', 'applied-energetics', 'univ-energy', 'solaris', 'zb-def', 'microdyne', 'fulcrumtech', '4sigma', 'powerhouse-fitness', 'ecorp', '.', 'nwo', 'fulcrumassets', 'helios', 'kuai-gong', 'b-and-a', 'clarkinc', 'vitalife', 'run4theh111z', 'stormtech', 'omnitek', 'blade', 'megacorp', 'The-Cave', 'zeus-med', 'omega-net', 'comptek', 'foodnstuff', 'sigma-cosmetics', 'joesguns', 'zer0', 'nectar-net', 'phantasy', 'johnson-ortho', 'zb-institute', 'I.I.I.I', 'alpha-ent', 'global-pharm', 'unitalife', 'defcomm', 'nova-med', 'millenium-fitness', 'snap-fitness', 'avmnite-02h', 'rothman-uni', 'summit-uni', 'aevum-police', 'galactic-cyber', 'omnia', 'max-hardware', 'hong-fang-tea', 'harakiri-sushi', 'iron-gym']
   localStorage.setItem('allServers', JSON.stringify(allServers))
-  let fileList = ['p2hack.js','autobuy.js', 'checkServers.js', 'main.js', 'p1hack.js', 'ramUpgrade.js', 'selectTarget.js']
+  let fileList = ['findContract.js', 'startFindingContract.js', 'selectTargetP2.js', 'grow.js', 'weaken.js', 'hack.js', 'p2.js', 'p2hack.js', 'autobuy.js', 'checkServers.js', 'main.js', 'p1hack.js', 'ramUpgrade.js', 'selectTarget.js']
   for (let server of allServers) {
     for (let file of fileList) {
       if (ns.fileExists(file, server)) {
@@ -59,28 +62,18 @@ export async function main(ns) {
       if (stage != 2) {
         stage = 2
         ns.tprint('开始第二阶段')
+        ns.tprint('您可以尝试完成Milestone中不要钱的任务，并加入组织，开始hacking contract')
+
         // 第二阶段
         // 第二阶段的内存稍微宽松一些
         // 动态获取最高价值的目标
-        ns.exec('selectTarget.js', 'home')
+        ns.exec('selectTargetP2.js', 'home')
         // 动态获取更多服务器
         ns.exec('checkServers.js', 'home')
         // 动态购买内容
-        ns.exec('autobuy.js', 'home')
+        ns.exec('autobuy.js', 'n00dles')
         // 分发任务
-        for (let server of allServers) {
-          try {
-            await ns.kill('p1hack.js', server)
-            let t = Math.floor((ns.getServerMaxRam(server) - ns.getServerUsedRam(server)) / ns.getScriptRam('p1hack.js', server))
-            if (t > 0) {
-              await ns.nuke(server)
-              console.warn(server, t)
-              await ns.exec('p2hack.js', server, t)
-            }
-          } catch (e) {
-            console.warn(server + '->' + e.toString())
-          }
-        }
+        ns.exec('p2.js', 'home')
       }
     }
     await ns.sleep(1000 * 60)

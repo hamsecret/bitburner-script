@@ -1,2 +1,0 @@
-var host=args[0]
-grow(host)
