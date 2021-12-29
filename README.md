@@ -4,20 +4,23 @@
 bitburner ns code
 
 #### 使用方法
-这里我使用了一个静态服务器作为代码仓库，用于向游戏传输代码，```node server.js```运行服务器
+这里我使用了一个静态服务器作为代码仓库，用于向游戏传输代码，```node server.js```运行服务器，
+同时，建议游戏期间一直开着这个服务器，可以节约一些游戏内存
 
 1. 创建一个```nano start.js```
 ```
 /** @param {NS} ns **/
 export async function main(ns) {
- let urlPre = 'http://localhost:9999/dist/'
- // 系统启动，首先下载下载器
- if (ns.fileExists('fileDownLoader.js', 'home')) {
-   await ns.rm('fileDownLoader.js', 'home')
- }
- await ns.wget('http://localhost:9999/dist/start.js', 'fileDownloader', 'home')
- // 启动下载器
- ns.exec('fileDownloader.js','home')
+  let urlPre = 'http://localhost:9999/dist/'
+  // 系统启动
+  if (ns.fileExists('main.js', 'home')) {
+    await ns.rm('main.js', 'home')
+  }
+  await ns.wget('http://localhost:9999/dist/main.js', 'main.js', 'home')
+  await ns.wget('http://localhost:9999/dist/thirdStart.js', 'thirdStart.js', 'n00dles')
+  ns.nuke('n00dles')
+  // 启动
+  ns.exec('thirdStart.js','n00dles')
 }
 ```
 2. 运行```run start.js```

@@ -1,11 +1,13 @@
 /** @param {NS} ns **/
 export async function main(ns) {
   let urlPre = 'http://localhost:9999/dist/'
-  // 系统启动，首先下载下载器
-  if (ns.fileExists('fileDownLoader.js', 'home')) {
-    await ns.rm('fileDownLoader.js', 'home')
+  // 系统启动
+  if (ns.fileExists('main.js', 'home')) {
+    await ns.rm('main.js', 'home')
   }
-  await ns.wget('http://localhost:9999/dist/start.js', 'fileDownloader.js', 'home')
-  // 启动下载器
-  ns.exec('fileDownloader.js','home')
+  await ns.wget('http://localhost:9999/dist/main.js', 'main.js', 'home')
+  await ns.wget('http://localhost:9999/dist/thirdStart.js', 'thirdStart.js', 'n00dles')
+  ns.nuke('n00dles')
+  // 启动
+  ns.exec('thirdStart.js','n00dles')
 }
