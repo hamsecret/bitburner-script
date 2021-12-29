@@ -35,7 +35,7 @@ function initDOM() {
 
 }
 async function scan(ns, parent, server, list) {
-	let fileList = ['czhWeaken.js', 'czhGrow.js']
+	let fileList = ['czhWeaken.js', 'czhGrow.js','czhStockUp.js','czhStockDown.js']
 	const children = await ns.scan(server);
 	for (let child of children) {
 		if (parent == child) {

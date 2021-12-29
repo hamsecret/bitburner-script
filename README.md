@@ -4,8 +4,23 @@
 bitburner ns code
 
 #### 使用方法
+这里我使用了一个静态服务器作为代码仓库，用于向游戏传输代码，```node server.js```运行服务器
 
-每次重启或者安装Augmentations之后，都是全新的开始，这个时候是纯开荒性质，所以我目前聚焦于开荒之后的快速发展，整体思路是自动部署代码到所有服务器并运行，同时寻找contract赚钱
+1. 创建一个```nano start.js```
+```
+/** @param {NS} ns **/
+export async function main(ns) {
+ let urlPre = 'http://localhost:9999/dist/'
+ // 系统启动，首先下载下载器
+ if (ns.fileExists('fileDownLoader.js', 'home')) {
+   await ns.rm('fileDownLoader.js', 'home')
+ }
+ await ns.wget('http://localhost:9999/dist/start.js', 'fileDownloader', 'home')
+ // 启动下载器
+ ns.exec('fileDownloader.js','home')
+}
+```
+2. 运行```run start.js```
 
 #### 具体步骤
 1. 开局首先运行czhStart.js，将会自动开始在最开始connect到的几台服务器薅羊毛
