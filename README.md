@@ -3,6 +3,8 @@
 #### 介绍
 bitburner ns code
 
+[Gitee](https://gitee.com/hamsecret/bitburner)更新的更快
+
 #### 使用方法
 这里我使用了一个静态服务器作为代码仓库，用于向游戏传输代码，```node server.js```运行服务器，
 同时，建议游戏期间一直开着这个服务器，可以节约一些游戏内存
